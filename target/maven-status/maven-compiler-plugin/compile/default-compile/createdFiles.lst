@@ -1,0 +1,12 @@
+com/lognmanager/repository/LoginRepository.class
+com/lognmanager/service/TokenService.class
+com/lognmanager/model/Token.class
+com/lognmanager/model/Login.class
+com/lognmanager/ServletInitializer.class
+com/lognmanager/controller/LoginCtrl.class
+com/lognmanager/conf/LoginConf.class
+com/lognmanager/dto/LoginDto.class
+com/lognmanager/controller/TokenCtrl.class
+com/lognmanager/service/LoginService.class
+com/lognmanager/LognmanagerApplication.class
+com/lognmanager/repository/TokenRepository.class
