@@ -41,12 +41,12 @@ public class LoginService {
 			tokenRepo.save(token);
 			appResponse.setData(loginResDto);
 			appResponse.setStatus(true);
-			appResponse.setMessage("Successfully Login.");
 			appResponse.setStatusCode(200);
+			appResponse.setMessage("Successfully Login.");
 		}else {
 			appResponse.setStatus(false);
-			appResponse.setMessage("User name or password not exist.");
 			appResponse.setStatusCode(404);
+			appResponse.setMessage("User name or password not exist.");
 		}
 		return appResponse;
 	}

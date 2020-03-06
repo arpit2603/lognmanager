@@ -8,5 +8,5 @@ import com.lognmanager.model.Token;
 @Repository
 public interface TokenRepository extends CrudRepository<Token , String> {
 	
-	
+	public Token findByToken(String token);
 }
