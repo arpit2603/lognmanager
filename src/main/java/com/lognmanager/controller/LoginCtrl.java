@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lognmanager.dto.LoginDto;
+import com.lognmanager.request.dto.LoginReqDto;
+import com.lognmanager.response.dto.AppResponse;
 import com.lognmanager.service.LoginService;
 
 @RestController
@@ -19,9 +20,8 @@ public class LoginCtrl {
 	LoginService lgnService;
 	
 	@PostMapping("/request")
-	public ResponseEntity<?> loginRequest(@RequestBody LoginDto login) {
-		lgnService.getLoginDetails(login);
-		return new ResponseEntity<String>("",HttpStatus.OK);
+	public ResponseEntity<?> loginRequest(@RequestBody LoginReqDto login) {
+		return new ResponseEntity<AppResponse>(lgnService.getLoginDetails(login),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
