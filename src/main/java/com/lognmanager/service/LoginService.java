@@ -10,6 +10,7 @@ import com.lognmanager.model.Login;
 import com.lognmanager.model.Token;
 import com.lognmanager.repository.LoginRepository;
 import com.lognmanager.repository.TokenRepository;
+import com.lognmanager.request.dto.LoginRegisterReqDto;
 import com.lognmanager.request.dto.LoginReqDto;
 import com.lognmanager.response.dto.AppResponse;
 import com.lognmanager.response.dto.LoginResDto;
@@ -51,4 +52,23 @@ public class LoginService {
 		return appResponse;
 	}
 
+	public AppResponse addLoginDetails(LoginRegisterReqDto loginRegisterReq) {
+		AppResponse appResponse = loginConf.getAppResponse();
+		Login loginDetails = loginConf.getObjectMapper().convertValue(loginRegisterReq, Login.class);
+		loginDetails = lgnRepo.save(loginDetails);
+		appResponse.setStatus(true);
+		appResponse.setStatusCode(200);
+		appResponse.setMessage("Successfully register.");
+		return appResponse;
+	}
+
+	public AppResponse updateLoginDetails(LoginRegisterReqDto loginUpdateReq) {
+		AppResponse appResponse = loginConf.getAppResponse();
+		Login loginDetails = loginConf.getObjectMapper().convertValue(loginUpdateReq, Login.class);
+		lgnRepo.save(loginDetails);
+		appResponse.setStatus(true);
+		appResponse.setStatusCode(200);
+		appResponse.setMessage("Successfully updated.");
+		return appResponse;
+	}
 }

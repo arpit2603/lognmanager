@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lognmanager.request.dto.LoginRegisterReqDto;
 import com.lognmanager.request.dto.LoginReqDto;
 import com.lognmanager.response.dto.AppResponse;
 import com.lognmanager.service.LoginService;
@@ -25,13 +26,13 @@ public class LoginCtrl {
 	}
 	
 	@PostMapping("/add")
-	public void addDetails() {
-		
+	public ResponseEntity<?> addDetails(@RequestBody LoginRegisterReqDto loginDetails) {
+		return new ResponseEntity<AppResponse>(lgnService.addLoginDetails(loginDetails),HttpStatus.OK);
 	}
 	
 	@PostMapping("/update")
-	public void updateDetails() {
-		
+	public ResponseEntity<?> updateDetails(@RequestBody LoginRegisterReqDto loginDetails) {
+		return new ResponseEntity<AppResponse>(lgnService.updateLoginDetails(loginDetails),HttpStatus.OK);
 	}
 
 }
