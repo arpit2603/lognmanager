@@ -9,4 +9,6 @@ import com.lognmanager.model.Token;
 public interface TokenRepository extends CrudRepository<Token , String> {
 	
 	public Token findByToken(String token);
+	public Long deleteByToken(String token);
+	
 }
