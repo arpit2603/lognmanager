@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lognmanager.conf.Messages;
 import com.lognmanager.conf.LoginConf;
 import com.lognmanager.model.Login;
 import com.lognmanager.model.Token;
@@ -17,6 +18,9 @@ import com.lognmanager.response.dto.LoginResDto;
 
 @Service
 public class LoginService {
+	
+	@Autowired
+	Messages messages;
 	
 	@Autowired
 	LoginRepository lgnRepo;
@@ -43,7 +47,7 @@ public class LoginService {
 			appResponse.setData(loginResDto);
 			appResponse.setStatus(true);
 			appResponse.setStatusCode(200);
-			appResponse.setMessage("Successfully Login.");
+			appResponse.setMessage(messages.get("successful.login"));
 		}else {
 			appResponse.setStatus(false);
 			appResponse.setStatusCode(404);
@@ -69,6 +73,14 @@ public class LoginService {
 		appResponse.setStatus(true);
 		appResponse.setStatusCode(200);
 		appResponse.setMessage("Successfully updated.");
+		return appResponse;
+	}
+	
+	public AppResponse testMessage() {
+		AppResponse appResponse = loginConf.getAppResponse();
+		appResponse.setStatus(true);
+		appResponse.setStatusCode(200);
+		appResponse.setMessage(messages.get("successful.login"));
 		return appResponse;
 	}
 }

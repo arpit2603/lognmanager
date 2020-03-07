@@ -3,6 +3,7 @@ package com.lognmanager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,11 @@ public class LoginCtrl {
 	@PostMapping("/update")
 	public ResponseEntity<?> updateDetails(@RequestBody LoginRegisterReqDto loginDetails) {
 		return new ResponseEntity<AppResponse>(lgnService.updateLoginDetails(loginDetails),HttpStatus.OK);
+	}
+	
+	@GetMapping("/test")
+	public ResponseEntity<?> testMessage() {
+		return new ResponseEntity<AppResponse>(lgnService.testMessage(),HttpStatus.OK);
 	}
 
 }
