@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lognmanager.conf.LoginConf;
+import com.lognmanager.conf.Messages;
 import com.lognmanager.model.Token;
 import com.lognmanager.repository.TokenRepository;
 import com.lognmanager.request.dto.TokenReqDto;
@@ -15,6 +16,9 @@ import com.lognmanager.response.dto.AppResponse;
 
 @Service
 public class TokenService {
+	
+	@Autowired
+	Messages messages;
 	
 	@Autowired
 	TokenRepository tokenRepo;
@@ -37,16 +41,16 @@ public class TokenService {
 			if(diffMinutes<=tokenTime) {
 				appResponse.setStatus(true);
 				appResponse.setStatusCode(200);
-				appResponse.setMessage("Authenticated.");
+				appResponse.setMessage(messages.get("token.authenticate"));
 			}else {
 				appResponse.setStatus(false);
 				appResponse.setStatusCode(200);
-				appResponse.setMessage("Token expired.");
+				appResponse.setMessage(messages.get("token.expire.error"));
 			}
 		}else {
 			appResponse.setStatus(false);
 			appResponse.setStatusCode(404);
-			appResponse.setMessage("Unauthorized person.");
+			appResponse.setMessage(messages.get("token.authenticate.error"));
 		}
 		return appResponse;
 	}
@@ -58,11 +62,11 @@ public class TokenService {
 			token.setLastRequest(new Date().getTime());
 			tokenRepo.save(token);
 			appResponse.setStatus(true);
-			appResponse.setMessage("Successfully updated.");
+			appResponse.setMessage(messages.get("token.update"));
 			appResponse.setStatusCode(200);
 		}else {
 			appResponse.setStatus(false);
-			appResponse.setMessage("Token not exists.");
+			appResponse.setMessage(messages.get("token.authenticate.error"));
 			appResponse.setStatusCode(404);
 		}
 		return appResponse;
@@ -74,11 +78,11 @@ public class TokenService {
 		long deletedToken = tokenRepo.deleteByToken(token);
 		if(deletedToken > 0) {
 			appResponse.setStatus(true);
-			appResponse.setMessage("Successfully deleted.");
+			appResponse.setMessage(messages.get("token.delete"));
 			appResponse.setStatusCode(200);
 		}else {
 			appResponse.setStatus(false);
-			appResponse.setMessage("Token not exist.");
+			appResponse.setMessage(messages.get("token.authenticate.error"));
 			appResponse.setStatusCode(404);
 		}
 		return appResponse;

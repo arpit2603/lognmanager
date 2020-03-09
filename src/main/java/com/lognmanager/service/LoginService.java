@@ -47,11 +47,11 @@ public class LoginService {
 			appResponse.setData(loginResDto);
 			appResponse.setStatus(true);
 			appResponse.setStatusCode(200);
-			appResponse.setMessage(messages.get("successful.login"));
+			appResponse.setMessage(messages.get("login.success"));
 		}else {
 			appResponse.setStatus(false);
 			appResponse.setStatusCode(404);
-			appResponse.setMessage("User name or password not exist.");
+			appResponse.setMessage(messages.get("login.error"));
 		}
 		return appResponse;
 	}
@@ -62,7 +62,7 @@ public class LoginService {
 		loginDetails = lgnRepo.save(loginDetails);
 		appResponse.setStatus(true);
 		appResponse.setStatusCode(200);
-		appResponse.setMessage("Successfully register.");
+		appResponse.setMessage(messages.get("login.details.register"));
 		return appResponse;
 	}
 
@@ -72,7 +72,7 @@ public class LoginService {
 		lgnRepo.save(loginDetails);
 		appResponse.setStatus(true);
 		appResponse.setStatusCode(200);
-		appResponse.setMessage("Successfully updated.");
+		appResponse.setMessage(messages.get("login.details.update"));
 		return appResponse;
 	}
 	
