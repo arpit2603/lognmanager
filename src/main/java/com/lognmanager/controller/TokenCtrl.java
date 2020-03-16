@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lognmanager.request.dto.TokenExpireReq;
 import com.lognmanager.request.dto.TokenReqDto;
 import com.lognmanager.response.dto.AppResponse;
 import com.lognmanager.service.TokenService;
@@ -35,9 +36,9 @@ public class TokenCtrl {
 		return new ResponseEntity<AppResponse>(tknService.deleteToken(token),HttpStatus.OK);
 	}
 	
-	@GetMapping("/expired/{token}")
-	public ResponseEntity<?> isExpired(@PathVariable("token") String token) {
-		return new ResponseEntity<AppResponse>(tknService.isExpired(token),HttpStatus.OK);
+	@PostMapping("/expired")
+	public ResponseEntity<?> isExpired(@RequestBody TokenExpireReq tokenExpireReq) {
+		return new ResponseEntity<AppResponse>(tknService.isExpired(tokenExpireReq),HttpStatus.OK);
 	}
 
 }

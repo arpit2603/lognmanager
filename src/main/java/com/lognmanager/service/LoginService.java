@@ -2,6 +2,8 @@ package com.lognmanager.service;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,7 @@ public class LoginService {
 	@Autowired
 	LoginConf loginConf;
 	
-	public AppResponse getLoginDetails(LoginReqDto login) {
+	public AppResponse getLoginDetails(LoginReqDto login , HttpServletRequest request) {
 		AppResponse appResponse = loginConf.getAppResponse();
 		Login loginInfo = lgnRepo.findByUserName(login.getUserName());
 		if(loginInfo != null && loginInfo.getPassword().equals(login.getPassword())) {
@@ -42,8 +44,9 @@ public class LoginService {
 			LoginResDto loginResDto = loginConf.getObjectMapper().convertValue(loginInfo, LoginResDto.class);
 			token.setLastRequest(new Date().getTime());
 			token.setToken(commonService.getEncryptedPassword(loginInfo.getPassword()));
-			loginResDto.setToken(token.getToken());
+			token.setRequestIp(request.getRemoteAddr());
 			tokenRepo.save(token);
+			loginResDto.setToken(token.getToken());
 			appResponse.setData(loginResDto);
 			appResponse.setStatus(true);
 			appResponse.setStatusCode(200);

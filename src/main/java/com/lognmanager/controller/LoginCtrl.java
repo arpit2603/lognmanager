@@ -1,5 +1,7 @@
 package com.lognmanager.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,8 @@ public class LoginCtrl {
 	LoginService lgnService;
 	
 	@PostMapping("/request")
-	public ResponseEntity<?> loginRequest(@RequestBody LoginReqDto login) {
-		return new ResponseEntity<AppResponse>(lgnService.getLoginDetails(login),HttpStatus.OK);
+	public ResponseEntity<?> loginRequest(@RequestBody LoginReqDto login , HttpServletRequest request) {
+		return new ResponseEntity<AppResponse>(lgnService.getLoginDetails(login , request),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")

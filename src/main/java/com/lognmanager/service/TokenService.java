@@ -11,6 +11,7 @@ import com.lognmanager.conf.LoginConf;
 import com.lognmanager.conf.Messages;
 import com.lognmanager.model.Token;
 import com.lognmanager.repository.TokenRepository;
+import com.lognmanager.request.dto.TokenExpireReq;
 import com.lognmanager.request.dto.TokenReqDto;
 import com.lognmanager.response.dto.AppResponse;
 
@@ -29,28 +30,34 @@ public class TokenService {
 	@Autowired
 	LoginConf loginConf;
 	
-	public AppResponse isExpired(String token) {
+	public AppResponse isExpired(TokenExpireReq tokenExpireReq) {
 		AppResponse appResponse = loginConf.getAppResponse();
-		Token tokenObj = tokenRepo.findByToken(token);
-		if(tokenObj != null) {
+		Token tokenObj = tokenRepo.findByToken(tokenExpireReq.getToken());
+		if(tokenObj == null) {
+			appResponse.setStatus(false);
+			appResponse.setStatusCode(404);
+			appResponse.setMessage(messages.get("token.authenticate.error"));
+		}else if(!tokenObj.getRequestIp().equals(tokenExpireReq.getRequestIp())) {
+			appResponse.setStatus(false);
+			appResponse.setStatusCode(404);
+			appResponse.setMessage(messages.get("token.authenticate.error"));
+		}else {
 			int tokenTime = loginConf.getTokenTime();
 			long lastReq = tokenObj.getLastRequest();
-			long currentTime = new Date().getTime();
+			long currentTime = tokenExpireReq.getRequestTime();
 			long difference = currentTime - lastReq;
 			long diffMinutes = difference / (60 * 1000) % 60;
 			if(diffMinutes<=tokenTime) {
 				appResponse.setStatus(true);
 				appResponse.setStatusCode(200);
 				appResponse.setMessage(messages.get("token.authenticate"));
+				tokenObj.setLastRequest(new Date().getTime());
+				tokenRepo.save(tokenObj);
 			}else {
 				appResponse.setStatus(false);
 				appResponse.setStatusCode(200);
 				appResponse.setMessage(messages.get("token.expire.error"));
 			}
-		}else {
-			appResponse.setStatus(false);
-			appResponse.setStatusCode(404);
-			appResponse.setMessage(messages.get("token.authenticate.error"));
 		}
 		return appResponse;
 	}
