@@ -3,8 +3,11 @@ package com.lognmanager.service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 @Service
 public class CommonService {
@@ -26,6 +29,13 @@ public class CommonService {
 			
 		}
 		return encryptedValue;
+	}
+	
+	public void getErrors(BindingResult bindResult) {
+		List<FieldError> errorList = bindResult.getFieldErrors();
+		for(FieldError fieldError : errorList) {
+			System.out.println(fieldError.getDefaultMessage());
+		}
 	}
 
 }

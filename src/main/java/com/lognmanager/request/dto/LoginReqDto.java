@@ -1,8 +1,12 @@
 package com.lognmanager.request.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class LoginReqDto {
 	
+	@NotEmpty(message = "{username.empty}")
 	private String userName;
+	@NotEmpty(message = "{password.empty}")
 	private String password;
 	
 	public String getUserName() {

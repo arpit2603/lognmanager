@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.lognmanager.conf.Messages;
 import com.lognmanager.conf.LoginConf;
@@ -43,7 +44,7 @@ public class LoginService {
 			Token token = loginConf.getToken();
 			LoginResDto loginResDto = loginConf.getObjectMapper().convertValue(loginInfo, LoginResDto.class);
 			token.setLastRequest(new Date().getTime());
-			token.setToken(commonService.getEncryptedPassword(loginInfo.getPassword()));
+			token.setToken(commonService.getEncryptedPassword(login.getUserName()+token.getLastRequest())); // Token creation
 			token.setRequestIp(request.getRemoteAddr());
 			tokenRepo.save(token);
 			loginResDto.setToken(token.getToken());
@@ -84,6 +85,12 @@ public class LoginService {
 		appResponse.setStatus(true);
 		appResponse.setStatusCode(200);
 		appResponse.setMessage(messages.get("successful.login"));
+		return appResponse;
+	}
+	
+	public AppResponse getErrors(BindingResult bindResult) {
+		AppResponse appResponse = loginConf.getAppResponse();
+		commonService.getErrors(bindResult);
 		return appResponse;
 	}
 }

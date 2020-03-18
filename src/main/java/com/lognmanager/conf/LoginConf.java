@@ -1,10 +1,15 @@
 package com.lognmanager.conf;
 
+import javax.validation.Validator;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.lognmanager.model.Token;
 import com.lognmanager.response.dto.AppResponse;
@@ -37,5 +42,4 @@ public class LoginConf {
 	}
 	
 	
-
 }
