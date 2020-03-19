@@ -29,7 +29,7 @@ public class LoginCtrl {
 	
 	@PostMapping("/request")
 	@ResponseBody
-	public ResponseEntity<?> loginRequest(@RequestBody@Valid LoginReqDto login , HttpServletRequest request , BindingResult bindResult ) {
+	public ResponseEntity<?> loginRequest(@RequestBody @Valid LoginReqDto login , BindingResult bindResult , HttpServletRequest request) {
 		if(bindResult.hasErrors()) {
 			return new ResponseEntity<AppResponse>(lgnService.getErrors(bindResult),HttpStatus.OK);
 		}
@@ -38,13 +38,19 @@ public class LoginCtrl {
 	
 	@PostMapping("/add")
 	@ResponseBody
-	public ResponseEntity<?> addDetails(@RequestBody LoginRegisterReqDto loginDetails) {
+	public ResponseEntity<?> addDetails(@RequestBody @Valid LoginRegisterReqDto loginDetails , BindingResult bindResult) {
+		if(bindResult.hasErrors()) {
+			return new ResponseEntity<AppResponse>(lgnService.getErrors(bindResult),HttpStatus.OK);
+		}
 		return new ResponseEntity<AppResponse>(lgnService.addLoginDetails(loginDetails),HttpStatus.OK);
 	}
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public ResponseEntity<?> updateDetails(@RequestBody LoginRegisterReqDto loginDetails) {
+	public ResponseEntity<?> updateDetails(@RequestBody @Valid LoginRegisterReqDto loginDetails , BindingResult bindResult) {
+		if(bindResult.hasErrors()) {
+			return new ResponseEntity<AppResponse>(lgnService.getErrors(bindResult),HttpStatus.OK);
+		}
 		return new ResponseEntity<AppResponse>(lgnService.updateLoginDetails(loginDetails),HttpStatus.OK);
 	}
 	

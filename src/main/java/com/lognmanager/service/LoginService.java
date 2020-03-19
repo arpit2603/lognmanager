@@ -90,7 +90,9 @@ public class LoginService {
 	
 	public AppResponse getErrors(BindingResult bindResult) {
 		AppResponse appResponse = loginConf.getAppResponse();
-		commonService.getErrors(bindResult);
+		appResponse.setStatus(false);
+		appResponse.setErrors(commonService.getErrors(bindResult));
+		appResponse.setMessage(messages.get("bind.error.message"));
 		return appResponse;
 	}
 }

@@ -2,6 +2,8 @@ package com.lognmanager.request.dto;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.stereotype.Component;
+@Component
 public class LoginReqDto {
 	
 	@NotEmpty(message = "{username.empty}")
