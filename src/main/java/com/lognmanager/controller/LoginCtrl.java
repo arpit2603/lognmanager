@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,19 +37,13 @@ public class LoginCtrl {
 	
 	@PostMapping("/add")
 	@ResponseBody
-	public ResponseEntity<?> addDetails(@RequestBody @Valid LoginRegisterReqDto loginDetails , BindingResult bindResult) {
-		if(bindResult.hasErrors()) {
-			return new ResponseEntity<AppResponse>(lgnService.getErrors(bindResult),HttpStatus.OK);
-		}
+	public ResponseEntity<?> addDetails(@RequestBody LoginRegisterReqDto loginDetails) {
 		return new ResponseEntity<AppResponse>(lgnService.addLoginDetails(loginDetails),HttpStatus.OK);
 	}
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public ResponseEntity<?> updateDetails(@RequestBody @Valid LoginRegisterReqDto loginDetails , BindingResult bindResult) {
-		if(bindResult.hasErrors()) {
-			return new ResponseEntity<AppResponse>(lgnService.getErrors(bindResult),HttpStatus.OK);
-		}
+	public ResponseEntity<?> updateDetails(@RequestBody LoginRegisterReqDto loginDetails) {
 		return new ResponseEntity<AppResponse>(lgnService.updateLoginDetails(loginDetails),HttpStatus.OK);
 	}
 	
